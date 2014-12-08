@@ -12,6 +12,7 @@ test:
 
 bench:
 	./bench/setup.sh
+	./bench/bench-all.sh
 
 .PHONY: test bench
 

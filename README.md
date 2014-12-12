@@ -63,6 +63,8 @@ its types are shown as `T`.
 
 `T array_to_min(values T[])`
 
+`T[] array_to_min_max(values T[])`
+
 ## array_to_hist
 ## array_to_mean
 ## array_to_median
@@ -71,6 +73,7 @@ its types are shown as `T`.
 ## array_to_percentiles
 ## array_to_max
 ## array_to_min
+## array_to_min_max
 
 
 

@@ -11,32 +11,32 @@ LANGUAGE c;
 
 CREATE OR REPLACE FUNCTION 
 array_to_mean(anyarray)
-RETURNS anyelement
+RETURNS DOUBLE PRECISION
 AS 'aggs_for_arrays', 'array_to_mean'
 LANGUAGE c;
 
 /*
 CREATE OR REPLACE FUNCTION 
 array_to_median(anyarray)
-RETURNS anyelement
+RETURNS DOUBLE PRECISION
 AS 'aggs_for_arrays', 'array_to_median'
 LANGUAGE c;
 
 CREATE OR REPLACE FUNCTION 
 array_to_mode(anyarray)
-RETURNS anyelement
+RETURNS DOUBLE PRECISION
 AS 'aggs_for_arrays', 'array_to_mode'
 LANGUAGE c;
 
 CREATE OR REPLACE FUNCTION 
 array_to_percentile(anyarray, float)
-RETURNS anyelement
+RETURNS DOUBLE PRECISION
 AS 'aggs_for_arrays', 'array_to_percentile'
 LANGUAGE c;
 
 CREATE OR REPLACE FUNCTION 
 array_to_percentiles(anyarray, float[])
-RETURNS anyarray
+RETURNS DOUBLE PRECISION[]
 AS 'aggs_for_arrays', 'array_to_percentiles'
 LANGUAGE c;
 

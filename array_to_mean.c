@@ -79,35 +79,31 @@ array_to_mean(PG_FUNCTION_ARGS)
       for (i = 0; i < valsLength; i++) {
         v += (DatumGetInt16(valsContent[i]) - v) / (i + 1);
       }
-      PG_RETURN_INT16(v);
       break;
     case INT4OID:
       for (i = 0; i < valsLength; i++) {
         v += (DatumGetInt32(valsContent[i]) - v) / (i + 1);
       }
-      PG_RETURN_INT32(v);
       break;
     case INT8OID:
       for (i = 0; i < valsLength; i++) {
         v += (DatumGetInt64(valsContent[i]) - v) / (i + 1);
       }
-      PG_RETURN_INT64(v);
       break;
     case FLOAT4OID:
       for (i = 0; i < valsLength; i++) {
         v += (DatumGetFloat4(valsContent[i]) - v) / (i + 1);
       }
-      PG_RETURN_FLOAT4(v);
       break;
     case FLOAT8OID:
       for (i = 0; i < valsLength; i++) {
         v += (DatumGetFloat8(valsContent[i]) - v) / (i + 1);
       }
-      PG_RETURN_FLOAT8(v);
       break;
     default:
       ereport(ERROR, (errmsg("Mean subject must be SMALLINT, INTEGER, BIGINT, REAL, or DOUBLE PRECISION values")));
       break;
   }
+  PG_RETURN_FLOAT8(v);
 }
 

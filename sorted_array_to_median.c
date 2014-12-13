@@ -1,13 +1,13 @@
 
-Datum array_to_mean(PG_FUNCTION_ARGS);
-PG_FUNCTION_INFO_V1(array_to_mean);
+Datum sorted_array_to_median(PG_FUNCTION_ARGS);
+PG_FUNCTION_INFO_V1(sorted_array_to_median);
 
 /**
- * Returns a mean from an array of numbers.
+ * Returns a median from an array of numbers.
  * by Paul A. Jungwirth
  */
 Datum
-array_to_mean(PG_FUNCTION_ARGS)
+sorted_array_to_median(PG_FUNCTION_ARGS)
 {
   // Our arguments:
   ArrayType *vals;
@@ -34,7 +34,7 @@ array_to_mean(PG_FUNCTION_ARGS)
   int valsLength;
 
   float8 v = 0;
-  int i;
+  int mid;
 
   if (PG_ARGISNULL(0)) {
     ereport(ERROR, (errmsg("Null arrays not accepted")));
@@ -61,7 +61,7 @@ array_to_mean(PG_FUNCTION_ARGS)
       valsType != INT8OID &&
       valsType != FLOAT4OID &&
       valsType != FLOAT8OID) {
-    ereport(ERROR, (errmsg("Mean subject must be SMALLINT, INTEGER, BIGINT, REAL, or DOUBLE PRECISION values")));
+    ereport(ERROR, (errmsg("Median subject must be SMALLINT, INTEGER, BIGINT, REAL, or DOUBLE PRECISION values")));
   }
 
   valsLength = (ARR_DIMS(vals))[0];
@@ -72,39 +72,45 @@ array_to_mean(PG_FUNCTION_ARGS)
   deconstruct_array(vals, valsType, valsTypeWidth, valsTypeByValue, valsTypeAlignmentCode,
 &valsContent, &valsNullFlags, &valsLength);
 
-  // Iterate through the contents and sum things up,
-  // then return the mean:
-  // Watch out for overflow:
-  // http://stackoverflow.com/questions/1930454/what-is-a-good-solution-for-calculating-an-average-where-the-sum-of-all-values-e/1934266#1934266
+  // Pull the middle item,
+  // or if the list is even the two middles:
 
+  if (valsLength == 0) PG_RETURN_NULL();
+
+  mid = valsLength / 2;
   switch (valsType) {
     case INT2OID:
-      for (i = 0; i < valsLength; i++) {
-        v += (DatumGetInt16(valsContent[i]) - v) / (i + 1);
+      v = DatumGetInt16(valsContent[mid]);
+      if (valsLength % 2 == 0) {
+        v += (DatumGetInt16(valsContent[mid - 1]) - v) / 2;
       }
       break;
     case INT4OID:
-      for (i = 0; i < valsLength; i++) {
-        v += (DatumGetInt32(valsContent[i]) - v) / (i + 1);
+      v = DatumGetInt32(valsContent[mid]);
+      if (valsLength % 2 == 0) {
+        v += (DatumGetInt32(valsContent[mid - 1]) - v) / 2;
       }
       break;
     case INT8OID:
-      for (i = 0; i < valsLength; i++) {
-        v += (DatumGetInt64(valsContent[i]) - v) / (i + 1);
+      v = DatumGetInt64(valsContent[mid]);
+      if (valsLength % 2 == 0) {
+        v += (DatumGetInt64(valsContent[mid - 1]) - v) / 2;
       }
       break;
     case FLOAT4OID:
-      for (i = 0; i < valsLength; i++) {
-        v += (DatumGetFloat4(valsContent[i]) - v) / (i + 1);
+      v = DatumGetFloat4(valsContent[mid]);
+      if (valsLength % 2 == 0) {
+        v += (DatumGetFloat4(valsContent[mid - 1]) - v) / 2;
       }
       break;
     case FLOAT8OID:
-      for (i = 0; i < valsLength; i++) {
-        v += (DatumGetFloat8(valsContent[i]) - v) / (i + 1);
+      v = DatumGetFloat8(valsContent[mid]);
+      if (valsLength % 2 == 0) {
+        v += (DatumGetFloat8(valsContent[mid - 1]) - v) / 2;
       }
       break;
     default:
-      ereport(ERROR, (errmsg("Mean subject must be SMALLINT, INTEGER, BIGINT, REAL, or DOUBLE PRECISION values")));
+      ereport(ERROR, (errmsg("Median subject must be SMALLINT, INTEGER, BIGINT, REAL, or DOUBLE PRECISION values")));
       break;
   }
   PG_RETURN_FLOAT8(v);

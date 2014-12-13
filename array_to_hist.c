@@ -53,7 +53,7 @@ array_to_hist(PG_FUNCTION_ARGS)
 
   vals = PG_GETARG_ARRAYTYPE_P(0);
 
-  if (ARR_NDIM(vals) != 1) {
+  if (ARR_NDIM(vals) > 1) {
     ereport(ERROR, (errmsg("One-dimesional arrays are required")));
   }
 

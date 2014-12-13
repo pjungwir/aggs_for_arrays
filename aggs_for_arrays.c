@@ -16,4 +16,6 @@ PG_MODULE_MAGIC;
 
 #include "array_to_hist.c"
 #include "array_to_mean.c"
+#include "array_to_median.c"
+#include "sorted_array_to_median.c"
 

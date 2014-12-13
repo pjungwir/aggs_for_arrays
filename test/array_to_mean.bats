@@ -1,5 +1,10 @@
 load test_helper
 
+@test "float8 mean empty" {
+  result="$(query "SELECT array_to_mean('{}'::double precision[])")";
+  [ "$result" = "NULL" ]
+}
+
 @test "int16 mean" {
   result="$(query "SELECT array_to_mean('{1,1,5,2,0}'::smallint[])")";
   [ "$result" = "1.8" ]

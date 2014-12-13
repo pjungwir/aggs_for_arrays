@@ -47,17 +47,19 @@ or an `integer` type (e.g. for histogram bucket counts).
 If a function can take any numeric type,
 its types are shown as `T`.
 
-`int[] array_to_hist(values T[], bucket_start T, bucket_width T, bucket_count int)`
+`integer[] array_to_hist(values T[], bucket_start T, bucket_width T, bucket_count integer)`
 
-`T array_to_mean(values T[])`
+`float array_to_mean(values T[])`
 
-`T array_to_median(values T[])`
+`float array_to_median(values T[])`
 
-`T array_to_mode(values T[])`
+`float sorted_array_to_median(values T[])`
 
-`T array_to_percentile(values T[], percentile float)`
+`float array_to_mode(values T[])`
 
-`T[] array_to_percentiles(values T[], percentils float[])`
+`float array_to_percentile(values T[], percentile float)`
+
+`float[] array_to_percentiles(values T[], percentils float[])`
 
 `T array_to_max(values T[])`
 
@@ -68,6 +70,7 @@ its types are shown as `T`.
 ## array_to_hist
 ## array_to_mean
 ## array_to_median
+## sorted_array_to_median
 ## array_to_mode
 ## array_to_percentile
 ## array_to_percentiles

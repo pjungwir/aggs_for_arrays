@@ -57,6 +57,8 @@ its types are shown as `T`.
 
 `float array_to_mode(values T[])`
 
+`float sorted_array_to_mode(values T[])`
+
 `float array_to_percentile(values T[], percentile float)`
 
 `float[] array_to_percentiles(values T[], percentils float[])`
@@ -72,6 +74,7 @@ its types are shown as `T`.
 ## array_to_median
 ## sorted_array_to_median
 ## array_to_mode
+## sorted_array_to_mode
 ## array_to_percentile
 ## array_to_percentiles
 ## array_to_max

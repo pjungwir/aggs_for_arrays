@@ -51,6 +51,7 @@ array_to_percentiles(anyarray, float[])
 RETURNS DOUBLE PRECISION[]
 AS 'aggs_for_arrays', 'array_to_percentiles'
 LANGUAGE c;
+*/
 
 CREATE OR REPLACE FUNCTION 
 array_to_min(anyarray)
@@ -70,4 +71,3 @@ RETURNS anyarray
 AS 'aggs_for_arrays', 'array_to_min_max'
 LANGUAGE c;
 
-*/

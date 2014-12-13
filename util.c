@@ -1,4 +1,12 @@
 
+typedef union pgnum {
+  int16 i16;
+  int32 i32;
+  int64 i64;
+  float4 f4;
+  float8 f8;
+} pgnum;
+
 /*
  *  This Quickselect routine is based on the algorithm described in
  *  "Numerical recipes in C", Second Edition,

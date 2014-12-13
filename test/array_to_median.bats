@@ -31,7 +31,6 @@ load test_helper
 }
 
 @test "int16 median even" {
-  query "SELECT array_to_median('{1,1,5,2,2,0}'::smallint[])";
   result="$(query "SELECT array_to_median('{1,1,5,2,2,0}'::smallint[])")";
   [ "$result" = "1.5" ]
 }

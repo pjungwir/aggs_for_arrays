@@ -27,13 +27,19 @@ RETURNS DOUBLE PRECISION
 AS 'aggs_for_arrays', 'sorted_array_to_median'
 LANGUAGE c;
 
-/*
 CREATE OR REPLACE FUNCTION 
 array_to_mode(anyarray)
 RETURNS DOUBLE PRECISION
 AS 'aggs_for_arrays', 'array_to_mode'
 LANGUAGE c;
 
+CREATE OR REPLACE FUNCTION 
+sorted_array_to_mode(anyarray)
+RETURNS DOUBLE PRECISION
+AS 'aggs_for_arrays', 'sorted_array_to_mode'
+LANGUAGE c;
+
+/*
 CREATE OR REPLACE FUNCTION 
 array_to_percentile(anyarray, float)
 RETURNS DOUBLE PRECISION

@@ -1,13 +1,13 @@
 
-Datum array_to_mean(PG_FUNCTION_ARGS);
-PG_FUNCTION_INFO_V1(array_to_mean);
+Datum array_to_mode(PG_FUNCTION_ARGS);
+PG_FUNCTION_INFO_V1(array_to_mode);
 
 /**
- * Returns a mean from an array of numbers.
+ * Returns a mode from an (unsorted) array of numbers.
  * by Paul A. Jungwirth
  */
 Datum
-array_to_mean(PG_FUNCTION_ARGS)
+array_to_mode(PG_FUNCTION_ARGS)
 {
   // Our arguments:
   ArrayType *vals;
@@ -33,8 +33,10 @@ array_to_mean(PG_FUNCTION_ARGS)
   // The size of the input array:
   int valsLength;
 
-  float8 v = 0;
-  int i;
+  float8 *floatVals;
+  int i, j;
+  valcount *counts;
+  float8 v;
 
   if (PG_ARGISNULL(0)) {
     ereport(ERROR, (errmsg("Null arrays not accepted")));
@@ -61,7 +63,7 @@ array_to_mean(PG_FUNCTION_ARGS)
       valsType != INT8OID &&
       valsType != FLOAT4OID &&
       valsType != FLOAT8OID) {
-    ereport(ERROR, (errmsg("Mean subject must be SMALLINT, INTEGER, BIGINT, REAL, or DOUBLE PRECISION values")));
+    ereport(ERROR, (errmsg("Mode subject must be SMALLINT, INTEGER, BIGINT, REAL, or DOUBLE PRECISION values")));
   }
 
   valsLength = (ARR_DIMS(vals))[0];
@@ -72,41 +74,69 @@ array_to_mean(PG_FUNCTION_ARGS)
   deconstruct_array(vals, valsType, valsTypeWidth, valsTypeByValue, valsTypeAlignmentCode,
 &valsContent, &valsNullFlags, &valsLength);
 
-  // Iterate through the contents and sum things up,
-  // then return the mean:
-  // Watch out for overflow:
-  // http://stackoverflow.com/questions/1930454/what-is-a-good-solution-for-calculating-an-average-where-the-sum-of-all-values-e/1934266#1934266
+  if (valsLength == 0) PG_RETURN_NULL();
+
+  // Compute the mode.
+
+  floatVals = palloc(sizeof(float8) * valsLength);
 
   switch (valsType) {
     case INT2OID:
       for (i = 0; i < valsLength; i++) {
-        v += (DatumGetInt16(valsContent[i]) - v) / (i + 1);
+        floatVals[i] = DatumGetInt16(valsContent[i]);
       }
       break;
     case INT4OID:
       for (i = 0; i < valsLength; i++) {
-        v += (DatumGetInt32(valsContent[i]) - v) / (i + 1);
+        floatVals[i] = DatumGetInt32(valsContent[i]);
       }
       break;
     case INT8OID:
       for (i = 0; i < valsLength; i++) {
-        v += (DatumGetInt64(valsContent[i]) - v) / (i + 1);
+        floatVals[i] = DatumGetInt64(valsContent[i]);
       }
       break;
     case FLOAT4OID:
       for (i = 0; i < valsLength; i++) {
-        v += (DatumGetFloat4(valsContent[i]) - v) / (i + 1);
+        floatVals[i] = DatumGetFloat4(valsContent[i]);
       }
       break;
     case FLOAT8OID:
       for (i = 0; i < valsLength; i++) {
-        v += (DatumGetFloat8(valsContent[i]) - v) / (i + 1);
+        floatVals[i] = DatumGetFloat8(valsContent[i]);
       }
       break;
     default:
-      ereport(ERROR, (errmsg("Mean subject must be SMALLINT, INTEGER, BIGINT, REAL, or DOUBLE PRECISION values")));
+      ereport(ERROR, (errmsg("Mode subject must be SMALLINT, INTEGER, BIGINT, REAL, or DOUBLE PRECISION values")));
       break;
   }
+
+  qsort(floatVals, valsLength, sizeof(float8), compare_float8);
+
+  // Count how many distinct values there are:
+  for (i = 0, j = 1; i < valsLength - 1; i++, j += (floatVals[i] != floatVals[i + 1]));
+
+  counts = palloc0(sizeof(valcount) * j);
+  counts[0].value = floatVals[0];
+  counts[0].count = 1;
+
+  // Generate counts for each distinct value:
+  for (i = j = 0; i < valsLength - 1; i++, counts[j].count++) {
+    if (floatVals[i] != floatVals[i + 1]) counts[++j].value = floatVals[i + 1];
+  }
+
+  qsort(counts, j + 1, sizeof(valcount), compare_valcount);
+
+  for (i = 0; i <= j && counts[i].count == counts[0].count; i++);
+
+  // Now i has the number of the winners.
+  // Average all the winners:
+
+  v = counts[0].value;
+  for (j = 1; j < i; j++) {
+    v += (counts[j].value - v) / (j + 1);
+  }
+
   PG_RETURN_FLOAT8(v);
 }
 

@@ -15,7 +15,7 @@ sorted_array_to_median(PG_FUNCTION_ARGS)
   // The array element type:
   Oid valsType;
 
-  // The array element type widths for our input and output arrays:
+  // The array element type widths for our input array:
   int16 valsTypeWidth;
 
   // The array element type "is passed by value" flags (not really used):

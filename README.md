@@ -8,7 +8,7 @@ These functions are useful because if you have a lot values you want to aggregat
 queries that fetch each value from a separate row can have poor performance.
 Storing all the values in a single row as a Postgres array
 can drastically improve query performance.
-For instance, computing a 100-bucket histogram on one million float values
+For instance, computing a 1000-bucket histogram on one million float values
 stored in separate rows took 11 seconds in a simple benchmark,
 compared to 30 milliseconds with the `array_to_hist` function.
 
@@ -111,15 +111,15 @@ You can run `bench.sh` to test the performance of various approaches:
     * PLPGSQL on `measurement_groups`.
     * The `aggs_for_arrays` function on `measurement_groups`.
 
-    function      SQL row-based SQL array-based PLPGSQL array-based `aggs_for_arrays`
-    `array_to_hist`
-    `array_to_mean`
-    `array_to_median`
-    `array_to_mode`
-    `array_to_percentile`
-    `array_to_percentiles`
-    `array_to_max`
-    `array_to_min`
-
+    | function               | SQL row-based | SQL array-based | PLPGSQL array-based | `aggs_for_arrays` |
+    |------------------------|---------------|-----------------|---------------------|-------------------|
+    | `array_to_hist`        |    11161.2 ms |      342.641 ms |          11422.3 ms |         30.111 ms |
+    | `array_to_mean`        | | | | |
+    | `array_to_median`      | | | | |
+    | `array_to_mode`        | | | | |
+    | `array_to_percentile`  | | | | |
+    | `array_to_percentiles` | | | | |
+    | `array_to_max`         | | | | |
+    | `array_to_min`         | | | | |
 
 

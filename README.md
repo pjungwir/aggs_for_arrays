@@ -111,15 +111,15 @@ You can run `bench.sh` to test the performance of various approaches:
     * PLPGSQL on `measurement_groups`.
     * The `aggs_for_arrays` function on `measurement_groups`.
 
-    | function               | SQL row-based | SQL array-based | PLPGSQL array-based | `aggs_for_arrays` |
-    |------------------------|---------------|-----------------|---------------------|-------------------|
-    | `array_to_hist`        |    11161.2 ms |      342.641 ms |          11422.3 ms |         30.111 ms |
-    | `array_to_mean`        | | | | |
-    | `array_to_median`      | | | | |
-    | `array_to_mode`        | | | | |
-    | `array_to_percentile`  | | | | |
-    | `array_to_percentiles` | | | | |
-    | `array_to_max`         | | | | |
-    | `array_to_min`         | | | | |
+| function               | SQL row-based | SQL array-based | PLPGSQL array-based | `aggs_for_arrays` |
+|------------------------|---------------|-----------------|---------------------|-------------------|
+| `array_to_hist`        |    11161.2 ms |      342.641 ms |          11422.3 ms |         30.111 ms |
+| `array_to_mean`        | | | | |
+| `array_to_median`      | | | | |
+| `array_to_mode`        | | | | |
+| `array_to_percentile`  | | | | |
+| `array_to_percentiles` | | | | |
+| `array_to_max`         | | | | |
+| `array_to_min`         | | | | |
 
 

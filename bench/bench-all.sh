@@ -118,7 +118,7 @@ assign plpgsql_array <<EOQ
 EOQ
 
 assign c_array <<EOQ
-  SELECT  array_to_hist(values, ${bin_start}, ${bin_width}, ${bin_count})
+  SELECT  array_to_hist(values, ${bin_start}::float, ${bin_width}::float, ${bin_count})
   FROM    sample_groups s
   WHERE   s.measurement_id = (SELECT MIN(id) FROM measurements)
 EOQ

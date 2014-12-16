@@ -9,14 +9,14 @@ queries that fetch each value from a separate row can have poor performance.
 Storing all the values in a single row as a Postgres array
 can drastically improve query performance.
 For instance, computing a 100-bucket histogram on one million float values
-stored in separate rows took 13 seconds in a simple benchmark,
-compared to 8 milliseconds with the `array_to_hist` function.
+stored in separate rows took 11 seconds in a simple benchmark,
+compared to 30 milliseconds with the `array_to_hist` function.
 
 Even if you store all the values together in an array column,
 these functions still outperform aggregations done in SQL or plpgsql,
 because the Postgres C API lets you skip a lot of the work
 for interfacing at those higher levels.
-For instance, the same benchmark gave 300ms for a SQL solution
+For instance, the same benchmark gave 340ms for a SQL solution
 and 11 seconds for a plpgsql solution.
 We show further benchmark results below.
 
@@ -61,7 +61,7 @@ its types are shown as `T`.
 
 `float array_to_percentile(values T[], percentile float)`
 
-`float[] array_to_percentiles(values T[], percentils float[])`
+`float[] array_to_percentiles(values T[], percentiles float[])`
 
 `T array_to_max(values T[])`
 

@@ -3,6 +3,7 @@
 #include <utils/array.h>
 #include <catalog/pg_type.h>
 #include <utils/lsyscache.h>
+#include <math.h>
 
 PG_MODULE_MAGIC;
 
@@ -16,4 +17,5 @@ PG_MODULE_MAGIC;
 #include "array_to_max.c"
 #include "array_to_min.c"
 #include "array_to_min_max.c"
+#include "array_to_percentile.c"
 

@@ -48,7 +48,7 @@ array_to_hist(PG_FUNCTION_ARGS)
   int i;
 
   if (PG_ARGISNULL(0) || PG_ARGISNULL(1) || PG_ARGISNULL(2) || PG_ARGISNULL(3)) {
-    ereport(ERROR, (errmsg("Null arrays not accepted")));
+    ereport(ERROR, (errmsg("Null arguments not accepted")));
   }
 
   vals = PG_GETARG_ARRAYTYPE_P(0);

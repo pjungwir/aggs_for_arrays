@@ -44,9 +44,13 @@ function assign() {
 # compare "SELECT NOW()" "SELECT NOW()" "SELECT NOW()" "SELECT NOW()"
 # echo
 
-source bench/bench_hist.sh
-source bench/bench_mean.sh
-source bench/bench_median.sh
-source bench/bench_mode.sh
-source bench/bench_percentile.sh
+# source bench/bench_hist.sh
+# source bench/bench_mean.sh
+# source bench/bench_median.sh
+# source bench/bench_mode.sh
+# source bench/bench_percentile.sh
+# source bench/bench_percentiles.sh
+# source bench/bench_max.sh
+# source bench/bench_min.sh
+source bench/bench_min_max.sh
 

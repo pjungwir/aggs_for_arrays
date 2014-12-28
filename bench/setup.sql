@@ -47,8 +47,9 @@ CROSS JOIN generate_series(1, 1000000)
 
 INSERT INTO sample_groups
 (measurement_id, values)
-SELECT  m.id, (SELECT array_agg(random() * 20000000000 - 10000000000) FROM generate_series(1, 1000000))
-FROM    measurements m
+SELECT  measurement_id, array_agg(value)
+FROM    samples
+GROUP BY measurement_id
 ;
 
 CREATE INDEX idx_measurements_id ON measurements (id);

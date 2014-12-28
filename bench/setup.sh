@@ -16,7 +16,7 @@ EOF
   exit 1;
 };
 
-if awk -F: '{ print $1 }' /etc/password | egrep '^postgres$'; then
+if awk -F: '{ print $1 }' /etc/passwd | egrep '^postgres$'; then
   sudo su - postgres -c "psql -d '$BENCH_DATABASE' -p '$BENCH_PORT' -c 'DROP EXTENSION IF EXISTS aggs_for_arrays'"
   sudo su - postgres -c "psql -d '$BENCH_DATABASE' -p '$BENCH_PORT' -c 'CREATE EXTENSION aggs_for_arrays'"
 else

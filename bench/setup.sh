@@ -16,8 +16,13 @@ EOF
   exit 1;
 };
 
-sudo su - postgres -c "psql -d '$BENCH_DATABASE' -p '$BENCH_PORT' -c 'DROP EXTENSION IF EXISTS aggs_for_arrays'"
-sudo su - postgres -c "psql -d '$BENCH_DATABASE' -p '$BENCH_PORT' -c 'CREATE EXTENSION aggs_for_arrays'"
+if awk -F: '{ print $1 }' /etc/password | egrep '^postgres$'; then
+  sudo su - postgres -c "psql -d '$BENCH_DATABASE' -p '$BENCH_PORT' -c 'DROP EXTENSION IF EXISTS aggs_for_arrays'"
+  sudo su - postgres -c "psql -d '$BENCH_DATABASE' -p '$BENCH_PORT' -c 'CREATE EXTENSION aggs_for_arrays'"
+else
+  psql -d "$BENCH_DATABASE" -p "$BENCH_PORT" -c 'DROP EXTENSION IF EXISTS aggs_for_arrays'
+  psql -d "$BENCH_DATABASE" -p "$BENCH_PORT" -c 'CREATE EXTENSION aggs_for_arrays'
+fi
 
 tables=$(echo '\dt' | psql --no-psqlrc --tuples-only -U "$BENCH_USER" -h "$BENCH_HOST" -p "$BENCH_PORT" "$BENCH_DATABASE" 2>/dev/null | wc -l)
 if [ "$tables" -lt 3 ]; then

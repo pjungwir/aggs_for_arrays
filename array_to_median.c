@@ -126,7 +126,7 @@ array_to_median(PG_FUNCTION_ARGS)
     memcpy(arr2, arr1, sizeof(float8) * valsLength);
     v1 = select_kth_value(arr1, valsLength, mid);
     v2 = select_kth_value(arr2, valsLength, mid - 1);
-    v1 += (v2 - v1) / 2;
+    v1 += (v2 - v1) / 2.0;
     PG_RETURN_FLOAT8(v1);
   }
 

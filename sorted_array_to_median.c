@@ -82,31 +82,31 @@ sorted_array_to_median(PG_FUNCTION_ARGS)
     case INT2OID:
       v = DatumGetInt16(valsContent[mid]);
       if (valsLength % 2 == 0) {
-        v += (DatumGetInt16(valsContent[mid - 1]) - v) / 2;
+        v += (DatumGetInt16(valsContent[mid - 1]) - v) / 2.0;
       }
       break;
     case INT4OID:
       v = DatumGetInt32(valsContent[mid]);
       if (valsLength % 2 == 0) {
-        v += (DatumGetInt32(valsContent[mid - 1]) - v) / 2;
+        v += (DatumGetInt32(valsContent[mid - 1]) - v) / 2.0;
       }
       break;
     case INT8OID:
       v = DatumGetInt64(valsContent[mid]);
       if (valsLength % 2 == 0) {
-        v += (DatumGetInt64(valsContent[mid - 1]) - v) / 2;
+        v += (DatumGetInt64(valsContent[mid - 1]) - v) / 2.0;
       }
       break;
     case FLOAT4OID:
       v = DatumGetFloat4(valsContent[mid]);
       if (valsLength % 2 == 0) {
-        v += (DatumGetFloat4(valsContent[mid - 1]) - v) / 2;
+        v += (DatumGetFloat4(valsContent[mid - 1]) - v) / 2.0;
       }
       break;
     case FLOAT8OID:
       v = DatumGetFloat8(valsContent[mid]);
       if (valsLength % 2 == 0) {
-        v += (DatumGetFloat8(valsContent[mid - 1]) - v) / 2;
+        v += (DatumGetFloat8(valsContent[mid - 1]) - v) / 2.0;
       }
       break;
     default:

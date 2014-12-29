@@ -118,20 +118,21 @@ Benchmarks
 
 Assume you have two tables:
 
-    CREATE TABLE measurements (
+    CREATE TABLE samples (
       id INTEGER PRIMARY KEY,
-      group_id INTEGER NOT NULL,
+      measurement_id INTEGER NOT NULL,
       value FLOAT NOT NULL
     );
 
-    CREATE TABLE measurement_groups {
+    CREATE TABLE sample_groups {
       id INTEGER PRIMARY KEY,
+      measurement_id INTEGER NOT NULL,
       values FLOAT[] NOT NULL
     };
 
 These tables store the same information,
-but `measurements` stores each measurement in a separate row,
-and `measurement_groups` stores a whole group in just one row.
+but `samples` stores each sample in a separate row,
+and `sample_groups` stores a whole group in just one row.
 
 You can run `bench.sh` to test the performance of various approaches:
 

@@ -43,7 +43,8 @@ Functions
 The available functions are described below.
 In general, these functions accept arrays of any integer or floating-point type,
 namely `SMALLINT`, `INTEGER`, `BIGINT`, `REAL`, or `DOUBLE PRECISION` (aka `FLOAT`).
-The return value will either be the same type (e.g. for a mean)
+The return value will either be the same type (e.g. for a minimum),
+a FLOAT (e.g. for a mean),
 or an `INTEGER` type (e.g. for histogram bucket counts).
 If a function can take any numeric type,
 its types are shown as `T`.

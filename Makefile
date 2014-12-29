@@ -13,11 +13,12 @@ test:
 
 bench:
 	./bench/setup.sh
-	./bench/bench-all.sh
+	./bench/bench-all.sh | tee bench-results.txt
 
-bench_report:
-	./bench/setup.sh
-	./bench/bench-all.sh | ./bench/format-table.rb
+bench_results.txt: bench
 
-.PHONY: test bench
+bench_report: bench_results.txt
+	./bench/format-table.rb < bench-results.txt
+
+.PHONY: test bench bench_report
 

@@ -2,4 +2,5 @@
 *.so
 .*.swp
 .*.swo
+bench-results.txt
 

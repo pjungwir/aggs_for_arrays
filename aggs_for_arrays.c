@@ -18,5 +18,7 @@ PG_MODULE_MAGIC;
 #include "array_to_min.c"
 #include "array_to_min_max.c"
 #include "array_to_percentile.c"
+#include "sorted_array_to_percentile.c"
 #include "array_to_percentiles.c"
+#include "sorted_array_to_percentiles.c"
 

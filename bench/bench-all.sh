@@ -51,7 +51,9 @@ source bench/bench_sorted_median.sh
 source bench/bench_mode.sh
 source bench/bench_sorted_mode.sh
 source bench/bench_percentile.sh
+source bench/bench_sorted_percentile.sh
 source bench/bench_percentiles.sh
+source bench/bench_sorted_percentiles.sh
 source bench/bench_max.sh
 source bench/bench_min.sh
 source bench/bench_min_max.sh

@@ -1,9 +1,13 @@
 
 ############################################################################
 echo
-echo "array_to_percentile"
-echo "==================="
+echo "sorted_array_to_percentile"
+echo "=========================="
 ############################################################################
+# These non-C implementations don't really take advantage
+# of the index or the pre-sorted array,
+# so I assume they could be improved,
+# but I'm not really sure how.
 
 assign sql_rows <<'EOQ'
 SELECT  v1 + (v2 - v1) * (0.3 * m - floor(0.3 * m))
@@ -14,12 +18,12 @@ FROM    (
         FROM    (
                 SELECT  value,
                         row_number() OVER (ORDER BY value ASC) - 1 r
-                FROM    samples
+                FROM    sorted_samples
                 WHERE   measurement_id = (SELECT MIN(id) FROM measurements)
                 ) x,
                 (
                 SELECT  COUNT(*) - 1 m
-                FROM    samples
+                FROM    sorted_samples
                 WHERE   measurement_id = (SELECT MIN(id) FROM measurements)
                 ) y
         WHERE   r = ceiling(0.3 * m)
@@ -44,7 +48,7 @@ assign sql_array <<'EOQ'
                           row_number() OVER (ORDER BY value ASC) - 1 r
                   FROM    (
                           SELECT  UNNEST(values) AS value
-                          FROM    sample_groups
+                          FROM    sorted_sample_groups
                           WHERE   measurement_id = (SELECT MIN(id) FROM measurements)
                           ) a
                   ) x
@@ -56,7 +60,7 @@ assign sql_array <<'EOQ'
 EOQ
 
 query >/dev/null <<'EOQ'
-CREATE OR REPLACE FUNCTION percentile_from_array (vals FLOAT[], perc FLOAT) RETURNS FLOAT AS $$
+CREATE OR REPLACE FUNCTION percentile_from_sorted_array (vals FLOAT[], perc FLOAT) RETURNS FLOAT AS $$
 DECLARE
   m integer;
 BEGIN
@@ -80,15 +84,15 @@ $$ LANGUAGE plpgsql IMMUTABLE;
 EOQ
  
 assign plpgsql_array <<EOQ
-  SELECT  percentile_from_array(values, 0.3)
-  FROM    sample_groups s
+  SELECT  percentile_from_sorted_array(values, 0.3)
+  FROM    sorted_sample_groups s
   WHERE   s.measurement_id = (SELECT MIN(id) FROM measurements)
   ;
 EOQ
 
 assign c_array <<EOQ
-  SELECT  array_to_percentile(values, 0.3)
-  FROM    sample_groups s
+  SELECT  sorted_array_to_percentile(values, 0.3)
+  FROM    sorted_sample_groups s
   WHERE   s.measurement_id = (SELECT MIN(id) FROM measurements)
   ;
 EOQ

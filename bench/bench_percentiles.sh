@@ -36,13 +36,17 @@ FROM    (
 EOQ
 
 assign sql_array <<'EOQ'
+  WITH y AS (
+    SELECT  array_length(values, 1) - 1 m
+    FROM    sample_groups
+    WHERE   measurement_id = (SELECT MIN(id) FROM measurements)
+  )
   SELECT  perc,
           v1 + (v2 - v1) * (perc * m - floor(perc * m))
   FROM    (
           SELECT  MIN(value) v1,
                   MAX(value) v2,
-                  perc,
-                  m
+                  perc
           FROM    (
                   SELECT  value,
                           row_number() OVER (ORDER BY value ASC) - 1 r
@@ -53,46 +57,38 @@ assign sql_array <<'EOQ'
                           ) a
                   ) x,
                   (
-                  SELECT  COUNT(*) - 1 m
-                  FROM    samples
-                  WHERE   measurement_id = (SELECT MIN(id) FROM measurements)
-                  ) y,
-                  (
                   SELECT  a * 0.20 AS perc
                   FROM    generate_series(0, 5) s(a)
                   ) z
-          WHERE   r = ceiling(perc * m)
-          OR      r = floor(perc * m)
-          GROUP BY perc, m
-          ) w
+          WHERE   r = ceiling(perc * (SELECT m FROM y))
+          OR      r = floor(perc * (SELECT m FROM y))
+          GROUP BY perc
+          ) w,
+          y
   ;
 EOQ
 
 query >/dev/null <<'EOQ'
 CREATE OR REPLACE FUNCTION percentiles_from_array (vals FLOAT[], percs FLOAT[]) RETURNS FLOAT[] AS $$
 DECLARE
+  m integer;
 BEGIN
+  m := array_length(vals, 1);
   RETURN (
     SELECT  array_agg(v1 + (v2 - v1) * (perc * m - floor(perc * m)))
     FROM    (
             SELECT  MIN(value) v1,
                     MAX(value) v2,
-                    perc,
-                    m
+                    perc
             FROM    (
                     SELECT  value,
                             row_number() OVER (ORDER BY value ASC) - 1 r
                     FROM    UNNEST(vals) AS value
                     ) x,
-                    (
-                    SELECT  COUNT(*) - 1 m
-                    FROM    samples
-                    WHERE   measurement_id = (SELECT MIN(id) FROM measurements)
-                    ) y,
                     UNNEST(percs) AS perc
             WHERE   r = ceiling(perc * m)
             OR      r = floor(perc * m)
-            GROUP BY perc, m
+            GROUP BY perc
             ) w
   );
 END;

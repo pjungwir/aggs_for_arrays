@@ -48,66 +48,66 @@ or an `INTEGER` type (e.g. for histogram bucket counts).
 If a function can take any numeric type,
 its types are shown as `T`.
 
-### `INTEGER[] array_to_hist(values T[], bucket_start T, bucket_width T, bucket_count INTEGER)`
+#### `INTEGER[] array_to_hist(values T[], bucket_start T, bucket_width T, bucket_count INTEGER)`
 
 Returns the bucket count based on the values and bucket characteristics you request.
 
-### `FLOAT array_to_mean(values T[])`
+#### `FLOAT array_to_mean(values T[])`
 
 Returns the mean of all the values in the array.
 
-### `FLOAT array_to_median(values T[])`
+#### `FLOAT array_to_median(values T[])`
 
 Returns the median.
 Does not require a pre-sorted input.
 If there are an even number of values,
 returns the mean of the two middle values.
 
-### `FLOAT sorted_array_to_median(values T[])`
+#### `FLOAT sorted_array_to_median(values T[])`
 
 Just like `array_to_median`, but assumes `values` is already sorted.
 
-### `FLOAT array_to_mode(values T[])`
+#### `FLOAT array_to_mode(values T[])`
 
 Returns the mode.
 Does not require a pre-sorted input.
 If there are several values tied for most common,
 returns their mean.
 
-### `FLOAT sorted_array_to_mode(values T[])`
+#### `FLOAT sorted_array_to_mode(values T[])`
 
 Just like `array_to_mode`, but assumes `values` is already sorted.
 
-### `FLOAT array_to_percentile(values T[], percentile FLOAT)`
+#### `FLOAT array_to_percentile(values T[], percentile FLOAT)`
 
 Returns the percentile you request,
 where `percentile` is a number from 0 to 1 inclusive.
 Asking for 0 will always give the minimum,
 1 for maximum, and 0.5 the median.
 
-### `FLOAT sorted_array_to_percentile(values T[], percentile FLOAT)`
+#### `FLOAT sorted_array_to_percentile(values T[], percentile FLOAT)`
 
 Just like `array_to_percentile`, but assumes `values` is already sorted.
 
-### `FLOAT[] array_to_percentiles(values T[], percentiles FLOAT[])`
+#### `FLOAT[] array_to_percentiles(values T[], percentiles FLOAT[])`
 
 Just like `array_to_percentile`,
 but you can pass several percentiles
 and get the result for each in a single call.
 
-### `FLOAT[] sorted_array_to_percentiles(values T[], percentiles FLOAT[])`
+#### `FLOAT[] sorted_array_to_percentiles(values T[], percentiles FLOAT[])`
 
 Just like `array_to_percentiles`, but assumes `values` is already sorted.
 
-### `T array_to_max(values T[])`
+#### `T array_to_max(values T[])`
 
 Returns the greatest value in the array.
 
-### `T array_to_min(values T[])`
+#### `T array_to_min(values T[])`
 
 Returns the least value in the array.
 
-### `T[] array_to_min_max(values T[])`
+#### `T[] array_to_min_max(values T[])`
 
 Returns a tuple with the min in position 1 and the max in position 2.
 

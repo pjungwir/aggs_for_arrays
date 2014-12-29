@@ -142,7 +142,7 @@ You can run `bench.sh` to test the performance of various approaches:
 The `sorted_array_to_*` methods use `sorted_samples` and `sorted_sample_groups` instead.
 
 | function                 | SQL row-based | SQL array-based | PLPGSQL array-based | `aggs_for_arrays` |
-|--------------------------|---------------|-----------------|---------------------|-------------------|
+|:-------------------------|--------------:|----------------:|--------------------:|------------------:|
 | `array_to_hist`          |    11161.2 ms |      342.641 ms |          11422.3 ms |         30.111 ms |
 | `array_to_mean`          | | | | |
 | `array_to_median`        | | | | |

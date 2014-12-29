@@ -15,5 +15,9 @@ bench:
 	./bench/setup.sh
 	./bench/bench-all.sh
 
+bench_report:
+	./bench/setup.sh
+	./bench/bench-all.sh | ./bench/format-table.rb
+
 .PHONY: test bench
 

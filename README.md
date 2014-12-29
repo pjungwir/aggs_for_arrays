@@ -41,47 +41,75 @@ Functions
 ---------
 
 The available functions are described below.
-In general, these functions accept arrays of any numeric type.
+In general, these functions accept arrays of any integer or floating-point type,
+namely `SMALLINT`, `INTEGER`, `BIGINT`, `REAL`, or `DOUBLE PRECISION` (aka `FLOAT`).
 The return value will either be the same type (e.g. for a mean)
-or an `integer` type (e.g. for histogram bucket counts).
+or an `INTEGER` type (e.g. for histogram bucket counts).
 If a function can take any numeric type,
 its types are shown as `T`.
 
-`integer[] array_to_hist(values T[], bucket_start T, bucket_width T, bucket_count integer)`
+## `INTEGER[] array_to_hist(values T[], bucket_start T, bucket_width T, bucket_count INTEGER)`
 
-`float array_to_mean(values T[])`
+Returns the bucket count based on the values and bucket characteristics you request.
 
-`float array_to_median(values T[])`
+## `FLOAT array_to_mean(values T[])`
 
-`float sorted_array_to_median(values T[])`
+Returns the mean of all the values in the array.
 
-`float array_to_mode(values T[])`
+## `FLOAT array_to_median(values T[])`
 
-`float sorted_array_to_mode(values T[])`
+Returns the median.
+Does not require a pre-sorted input.
+If there are an even number of values,
+returns the mean of the two middle values.
 
-`float array_to_percentile(values T[], percentile float)`
+## `FLOAT sorted_array_to_median(values T[])`
 
-`float[] array_to_percentiles(values T[], percentiles float[])`
+Just like `array_to_median`, but assumes `values` is already sorted.
 
-`T array_to_max(values T[])`
+## `FLOAT array_to_mode(values T[])`
 
-`T array_to_min(values T[])`
+Returns the mode.
+Does not require a pre-sorted input.
+If there are several values tied for most common,
+returns their mean.
 
-`T[] array_to_min_max(values T[])`
+## `FLOAT sorted_array_to_mode(values T[])`
 
-## array_to_hist
-## array_to_mean
-## array_to_median
-## sorted_array_to_median
-## array_to_mode
-## sorted_array_to_mode
-## array_to_percentile
-## array_to_percentiles
-## array_to_max
-## array_to_min
-## array_to_min_max
+Just like `array_to_mode`, but assumes `values` is already sorted.
 
+## `FLOAT array_to_percentile(values T[], percentile FLOAT)`
 
+Returns the percentile you request,
+where `percentile` is a number from 0 to 1 inclusive.
+Asking for 0 will always give the minimum,
+1 for maximum, and 0.5 the median.
+
+## `FLOAT sorted_array_to_percentile(values T[], percentile FLOAT)`
+
+Just like `array_to_percentile`, but assumes `values` is already sorted.
+
+## `FLOAT[] array_to_percentiles(values T[], percentiles FLOAT[])`
+
+Just like `array_to_percentile`,
+but you can pass several percentiles
+and get the result for each in a single call.
+
+## `FLOAT[] sorted_array_to_percentiles(values T[], percentiles FLOAT[])`
+
+Just like `array_to_percentiles`, but assumes `values` is already sorted.
+
+## `T array_to_max(values T[])`
+
+Returns the greatest value in the array.
+
+## `T array_to_min(values T[])`
+
+Returns the least value in the array.
+
+## `T[] array_to_min_max(values T[])`
+
+Returns a tuple with the min in position 1 and the max in position 2.
 
 
 Benchmarks
@@ -102,24 +130,29 @@ Assume you have two tables:
 
 These tables store the same information,
 but `measurements` stores each measurement in a separate row,
-and `measurement_groups stores a whole group in just one row.
+and `measurement_groups` stores a whole group in just one row.
 
 You can run `bench.sh` to test the performance of various approaches:
 
-    * SQL on `measurements`.
-    * SQL on `measurement_groups`.
-    * PLPGSQL on `measurement_groups`.
-    * The `aggs_for_arrays` function on `measurement_groups`.
+    * SQL on `samples`.
+    * SQL on `sample_groups`.
+    * PLPGSQL on `sample_groups`.
+    * The `aggs_for_arrays` function on `sample_groups`.
 
-| function               | SQL row-based | SQL array-based | PLPGSQL array-based | `aggs_for_arrays` |
-|------------------------|---------------|-----------------|---------------------|-------------------|
-| `array_to_hist`        |    11161.2 ms |      342.641 ms |          11422.3 ms |         30.111 ms |
-| `array_to_mean`        | | | | |
-| `array_to_median`      | | | | |
-| `array_to_mode`        | | | | |
-| `array_to_percentile`  | | | | |
-| `array_to_percentiles` | | | | |
-| `array_to_max`         | | | | |
-| `array_to_min`         | | | | |
+The `sorted_array_to_*` methods use `sorted_samples` and `sorted_sample_groups` instead.
+
+| function                 | SQL row-based | SQL array-based | PLPGSQL array-based | `aggs_for_arrays` |
+|--------------------------|---------------|-----------------|---------------------|-------------------|
+| `array_to_hist`          |    11161.2 ms |      342.641 ms |          11422.3 ms |         30.111 ms |
+| `array_to_mean`          | | | | |
+| `array_to_median`        | | | | |
+| `sorted_array_to_median` | | | | |
+| `array_to_mode`          | | | | |
+| `sorted_array_to_mode`   | | | | |
+| `array_to_percentile`    | | | | |
+| `array_to_percentiles`   | | | | |
+| `array_to_max`           | | | | |
+| `array_to_min`           | | | | |
+
 
 

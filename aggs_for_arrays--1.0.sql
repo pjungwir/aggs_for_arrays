@@ -81,3 +81,15 @@ RETURNS anyarray
 AS 'aggs_for_arrays', 'array_to_min_max'
 LANGUAGE c IMMUTABLE;
 
+CREATE OR REPLACE FUNCTION 
+array_to_skewness(anyarray)
+RETURNS DOUBLE PRECISION
+AS 'aggs_for_arrays', 'array_to_skewness'
+LANGUAGE c IMMUTABLE;
+
+CREATE OR REPLACE FUNCTION 
+array_to_kurtosis(anyarray)
+RETURNS DOUBLE PRECISION
+AS 'aggs_for_arrays', 'array_to_kurtosis'
+LANGUAGE c IMMUTABLE;
+

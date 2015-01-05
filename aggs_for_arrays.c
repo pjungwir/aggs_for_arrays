@@ -21,4 +21,6 @@ PG_MODULE_MAGIC;
 #include "sorted_array_to_percentile.c"
 #include "array_to_percentiles.c"
 #include "sorted_array_to_percentiles.c"
+#include "array_to_skewness.c"
+#include "array_to_kurtosis.c"
 

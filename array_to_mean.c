@@ -66,6 +66,8 @@ array_to_mean(PG_FUNCTION_ARGS)
 
   valsLength = (ARR_DIMS(vals))[0];
 
+  if (valsLength == 0) PG_RETURN_NULL();
+
   get_typlenbyvalalign(valsType, &valsTypeWidth, &valsTypeByValue, &valsTypeAlignmentCode);
 
   // Extract the array contents (as Datum objects).

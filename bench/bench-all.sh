@@ -57,4 +57,6 @@ source bench/bench_sorted_percentiles.sh
 source bench/bench_max.sh
 source bench/bench_min.sh
 source bench/bench_min_max.sh
+source bench/bench_skewness.sh
+source bench/bench_kurtosis.sh
 

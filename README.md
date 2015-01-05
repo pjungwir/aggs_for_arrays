@@ -85,6 +85,8 @@ Returns the percentile you request,
 where `percentile` is a number from 0 to 1 inclusive.
 Asking for 0 will always give the minimum,
 1 for maximum, and 0.5 the median.
+If you ask for a percentile that lands between two data points,
+we return a linear interpolation between them.
 
 #### `FLOAT sorted_array_to_percentile(values T[], percentile FLOAT)`
 
@@ -111,6 +113,16 @@ Returns the least value in the array.
 #### `T[] array_to_min_max(values T[])`
 
 Returns a tuple with the min in position 1 and the max in position 2.
+
+#### `FLOAT array_to_skewness(values T[])`
+
+Computes the [skewness](http://www.itl.nist.gov/div898/handbook/eda/section3/eda35b.htm)
+of the given values.
+
+#### `FLOAT array_to_kurtosis(values T[])`
+
+Computes the [kurtosis](http://www.itl.nist.gov/div898/handbook/eda/section3/eda35b.htm)
+of the given values.
 
 
 Benchmarks

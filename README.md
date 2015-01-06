@@ -9,15 +9,15 @@ queries that fetch each value from a separate row can have poor performance.
 Storing all the values in a single row as a Postgres array
 can drastically improve query performance.
 For instance, computing a 1000-bucket histogram on one million float values
-stored in separate rows took 11 seconds in a simple benchmark,
-compared to 30 milliseconds with the `array_to_hist` function.
+stored in separate rows took 12 seconds in a simple benchmark,
+compared to 27 milliseconds with the `array_to_hist` function.
 
 Even if you store all the values together in an array column,
 these functions still outperform aggregations done in SQL or plpgsql,
 because the Postgres C API lets you skip a lot of the work
 for interfacing at those higher levels.
-For instance, the same benchmark gave 340ms for a SQL solution
-and 11 seconds for a plpgsql solution.
+For instance, the same benchmark gave 398ms for a SQL solution
+and 12 seconds for a plpgsql solution.
 We show further benchmark results below.
 
 
@@ -157,19 +157,19 @@ The `sorted_array_to_*` methods use `sorted_samples` and `sorted_sample_groups` 
 
 | function                      | SQL row-based | SQL array-based | PLPGSQL array-based | `aggs_for_arrays` |
 |:------------------------------|--------------:|----------------:|--------------------:|------------------:|
-| `array_to_hist`               |    48276.2 ms |      629.341 ms |        12324.200 ms |         27.724 ms |
-| `array_to_mean`               |    10731.1 ms |      125.522 ms |          410.095 ms |         25.110 ms |
-| `array_to_median`             |    33663.9 ms |     1181.420 ms |         1296.170 ms |         48.942 ms |
-| `sorted_array_to_median`      |    25363.6 ms |       94.862 ms |           64.780 ms |         14.741 ms |
-| `array_to_mode`               |    13265.4 ms |     1438.020 ms |         1560.110 ms |        198.599 ms |
-| `sorted_array_to_mode`        |    13208.5 ms |     1442.450 ms |         1613.020 ms |         45.399 ms |
-| `array_to_percentile`         |    24476.3 ms |     2635.590 ms |         1646.700 ms |        179.074 ms |
-| `sorted_array_to_percentile`  |    24295.7 ms |     2084.990 ms |         1213.790 ms |         22.477 ms |
-| `array_to_percentiles`        |    32347.7 ms |    10644.400 ms |         3557.470 ms |        177.101 ms |
-| `sorted_array_to_percentiles` |    32340.5 ms |    10204.800 ms |         3078.040 ms |         20.969 ms |
-| `array_to_max`                |    10626.5 ms |      113.051 ms |          393.595 ms |         17.617 ms |
-| `array_to_min`                |    10647.3 ms |      112.997 ms |          398.808 ms |         17.443 ms |
-| `array_to_min_max`            |    10706.2 ms |      164.663 ms |          831.640 ms |         22.914 ms |
-| `array_to_skewness`           |    22563.7 ms |      803.010 ms |         1085.890 ms |        114.186 ms |
-| `array_to_kurtosis`           |    22503.3 ms |      798.574 ms |         1101.620 ms |        113.094 ms |
+| `array_to_hist`               |    12218.1 ms |      398.235 ms |        12310.800 ms |         26.936 ms |
+| `array_to_mean`               |    10630.0 ms |      121.677 ms |          390.983 ms |         25.226 ms |
+| `array_to_median`             |    33587.0 ms |     1163.070 ms |         1258.160 ms |         47.996 ms |
+| `sorted_array_to_median`      |    23239.5 ms |       30.107 ms |           41.225 ms |         14.835 ms |
+| `array_to_mode`               |    13724.1 ms |     1505.310 ms |         1552.610 ms |        201.943 ms |
+| `sorted_array_to_mode`        |    13195.2 ms |     1474.130 ms |         1577.770 ms |         45.171 ms |
+| `array_to_percentile`         |    24218.2 ms |     2591.240 ms |         1698.570 ms |        179.916 ms |
+| `sorted_array_to_percentile`  |    24305.5 ms |     2102.520 ms |         1204.140 ms |         21.947 ms |
+| `array_to_percentiles`        |    32367.0 ms |    10735.300 ms |         3608.800 ms |        188.752 ms |
+| `sorted_array_to_percentiles` |    32294.3 ms |    10153.300 ms |         3120.830 ms |         22.227 ms |
+| `array_to_max`                |    10613.2 ms |      115.094 ms |          398.791 ms |         17.321 ms |
+| `array_to_min`                |    10600.5 ms |      113.859 ms |          400.926 ms |         17.204 ms |
+| `array_to_min_max`            |    10727.9 ms |      169.226 ms |          824.539 ms |         23.922 ms |
+| `array_to_skewness`           |    22267.2 ms |      802.463 ms |         1077.630 ms |        120.925 ms |
+| `array_to_kurtosis`           |    22253.1 ms |      806.296 ms |         1075.960 ms |        112.210 ms |
 

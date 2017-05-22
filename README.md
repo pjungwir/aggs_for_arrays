@@ -1,5 +1,5 @@
-aggs_for_arrays
-===============
+`aggs_for_arrays`
+=================
 
 This Postgres extension provides various functions for operating on arrays,
 for instance taking the histogram of an array of numbers.
@@ -12,14 +12,29 @@ For instance, computing a 1000-bucket histogram on one million float values
 stored in separate rows took 12 seconds in a simple benchmark,
 compared to 27 milliseconds with the `array_to_hist` function.
 
-Even if you store all the values together in an array column,
-these functions still outperform aggregations done in SQL or plpgsql,
+Using arrays in this way is a bit like a poor-man's column-store database:
+it lets you keep all the values for one attribute in one place.
+(It's also a bit like how in R and Pandas you often see parallel arrays rather than arrays of objects.)
+To simplify a little, imagine pulling one million floats off disk in a single 8MB chunk
+instead of asking the drive for one million separate reads.
+I wouldn't use this pattern if your arrays get updated a lot,
+lest you take a hit on writes (At least test first!),
+but if they are pretty stable then using arrays can greatly speed up reads.
+
+With such an approach you could still use SQL or PLPGSQL,
+but these functions outperform such code,
 because the Postgres C API lets you skip a lot of the work
 for interfacing at those higher levels.
 For instance, the same benchmark gave 398ms for a SQL solution
 and 12 seconds for a plpgsql solution.
 We show further benchmark results below.
 
+Note that despite the name, these functions are not true aggregate functions
+(summarizing multiple rows).
+Rather they do aggregate-like calculations on a single input array.
+If you want actual aggregates that take multiple input arrays,
+then you might be looking for my other extension, [`aggs_for_vecs`](https://github.com/pjungwir/aggs_for_vecs).
+If this extension takes a column-store approach to your data, that one takes a row-store approach.
 
 Installing
 ----------
@@ -148,10 +163,10 @@ and `sample_groups` stores a whole group in just one row.
 
 You can run `bench.sh` to test the performance of various approaches:
 
-    * SQL on `samples`.
-    * SQL on `sample_groups`.
-    * PLPGSQL on `sample_groups`.
-    * The `aggs_for_arrays` function on `sample_groups`.
+- SQL on `samples`.
+- SQL on `sample_groups`.
+- PLPGSQL on `sample_groups`.
+- The `aggs_for_arrays` function on `sample_groups`.
 
 The `sorted_array_to_*` methods use `sorted_samples` and `sorted_sample_groups` instead.
 

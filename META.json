@@ -1,0 +1,33 @@
+{
+  "name": "aggs_for_arrays",
+  "abstract": "Functions to compute statistics on arrays of numbers",
+  "version": "1.0.0",
+  "maintainer": "Paul A. Jungwirth <pj@illuminatedcomputing.com>",
+  "license": "mit",
+  "provides": {
+    "aggs_for_arrays": {
+      "abstract": "Functions to compute statistics on arrays of numbers",
+      "file": "aggs_for_arrays--1.0.0.sql",
+      "docfile": "README.md",
+      "version": "1.0.0"
+    }
+  },
+  "resources": {
+    "repository": {
+      "url": "git://github.com/pjungwir/aggs_for_arrays.git",
+      "web": "https://github.com/pjungwir/aggs_for_arrays",
+      "type": "git"
+    }
+  },
+  "generated_by": "Paul A. Jungwirth",
+  "meta-spec": {
+    "version": "1.0.0",
+    "url": "http://pgxn.org/meta/spec.txt"
+  },
+  "tags": [
+    "math",
+    "arithmetic",
+    "arrays",
+    "vectors"
+  ]
+}

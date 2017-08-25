@@ -1,6 +1,7 @@
 MODULES = aggs_for_arrays
 EXTENSION = aggs_for_arrays
-DATA = aggs_for_arrays--1.0.sql
+EXTENSION_VERSION = 1.0.0
+DATA = $(EXTENSION)--$(EXTENSION_VERSION).sql
 
 PG_CONFIG = pg_config
 PGXS := $(shell $(PG_CONFIG) --pgxs)
@@ -20,5 +21,8 @@ bench_results.txt: bench
 bench_report: bench_results.txt
 	./bench/format-table.rb < bench-results.txt
 
-.PHONY: test bench bench_report
+release:
+	git archive --format zip --prefix=$(EXTENSION)-$(EXTENSION_VERSION)/ --output $(EXTENSION)-$(EXTENSION_VERSION).zip master
+
+.PHONY: test bench bench_report release
 

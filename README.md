@@ -68,6 +68,13 @@ its types are shown as `T`.
 
 Returns the bucket count based on the values and bucket characteristics you request.
 
+#### `INTEGER[] array_to_hist_2d(x_values T[], y_values T[], x_bucket_start T, y_bucket_start T, x_bucket_width T, y_bucket_width T, x_bucket_count INTEGER, y_bucket_count INTEGER)`
+
+Returns the bucket count as a 2-D array based on the values and bucket characteristics you request.
+The data arrays `x_values` and `y_values` must be the same length.
+We compare each array's first element and plot it, then their second element, etc.
+If either `x_values` or `y_values` is `NULL`, the whole result is `NULL`. If either contains a `NULL`, then that position isn't plotted.
+
 #### `FLOAT array_to_mean(values T[])`
 
 Returns the mean of all the values in the array.

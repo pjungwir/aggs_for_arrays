@@ -1,6 +1,6 @@
 MODULES = aggs_for_arrays
 EXTENSION = aggs_for_arrays
-EXTENSION_VERSION = 1.1.0
+EXTENSION_VERSION = 1.1.1
 DATA = $(EXTENSION)--$(EXTENSION_VERSION).sql
 
 PG_CONFIG = pg_config

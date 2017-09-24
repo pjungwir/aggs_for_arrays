@@ -119,7 +119,7 @@ array_to_hist(PG_FUNCTION_ARGS)
         if (v.i16 >= bucketsStart.i16 && v.i16 <= histMax.i16) {
           int b = (v.i16 - bucketsStart.i16) / bucketsSize.i16;
           if (b >= 0 && b < bucketsCount) {
-            histContent[b] = Int32GetDatum(DatumGetInt32(histContent[b]) + 1);
+            histContent[b] = Int16GetDatum(DatumGetInt16(histContent[b]) + 1);
           }
         }
       }

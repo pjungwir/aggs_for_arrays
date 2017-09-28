@@ -123,6 +123,9 @@ array_to_hist_2d(PG_FUNCTION_ARGS)
         xPos = (double)(DatumGetFloat8(xValsContent[i]) - xStart.f8) / xBucketWidth.f8;
         yPos = (double)(DatumGetFloat8(yValsContent[i]) - yStart.f8) / yBucketWidth.f8;
         break;
+      // Checked above, but we want to silence a compiler warning:
+      default:
+        ereport(ERROR, (errmsg("Histogram subject must be SMALLINT, INTEGER, BIGINT, REAL, or DOUBLE PRECISION values")));
     }
 
     if (xPos >= 0 && xPos < xBucketCount && yPos >= 0 && yPos < yBucketCount) {

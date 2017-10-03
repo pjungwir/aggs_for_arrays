@@ -27,12 +27,13 @@ array_to_min(PG_FUNCTION_ARGS)
   // The array contents, as PostgreSQL "Datum" objects:
   Datum *valsContent;
 
-  // List of "is null" flags for the array contents (not used):
+  // List of "is null" flags for the array contents:
   bool *valsNullFlags;
 
   // The size of the input array:
   int valsLength;
 
+  bool resultIsNull = true;
   int i;
   pgnum v;
 
@@ -47,10 +48,6 @@ array_to_min(PG_FUNCTION_ARGS)
   }
   if (ARR_NDIM(vals) > 1) {
     ereport(ERROR, (errmsg("One-dimesional arrays are required")));
-  }
-
-  if (array_contains_nulls(vals)) {
-    ereport(ERROR, (errmsg("Array contains null elements")));
   }
 
   // Determine the array element types.
@@ -78,43 +75,72 @@ array_to_min(PG_FUNCTION_ARGS)
 
   switch (valsType) {
     case INT2OID:
-      v.i16 = DatumGetInt16(valsContent[0]);
-      for (i = 1; i < valsLength; i++) {
-        if (DatumGetInt16(valsContent[i]) < v.i16) v.i16 = DatumGetInt16(valsContent[i]);
+      for (i = 0; i < valsLength; i++) {
+        if (valsNullFlags[i]) {
+          continue;
+        } else if (resultIsNull) {
+          v.i16 = DatumGetInt16(valsContent[0]);
+          resultIsNull = false;
+        } else if (DatumGetInt16(valsContent[i]) < v.i16) {
+          v.i16 = DatumGetInt16(valsContent[i]);
+        }
       }
-      PG_RETURN_INT16(v.i16);
-      break;
+      if (resultIsNull) PG_RETURN_NULL();
+      else PG_RETURN_INT16(v.i16);
     case INT4OID:
-      v.i32 = DatumGetInt32(valsContent[0]);
-      for (i = 1; i < valsLength; i++) {
-        if (DatumGetInt32(valsContent[i]) < v.i32) v.i32 = DatumGetInt32(valsContent[i]);
+      for (i = 0; i < valsLength; i++) {
+        if (valsNullFlags[i]) {
+          continue;
+        } else if (resultIsNull) {
+          v.i32 = DatumGetInt32(valsContent[0]);
+          resultIsNull = false;
+        } else if (DatumGetInt32(valsContent[i]) < v.i32) {
+          v.i32 = DatumGetInt32(valsContent[i]);
+        }
       }
-      PG_RETURN_INT32(v.i32);
-      break;
+      if (resultIsNull) PG_RETURN_NULL();
+      else PG_RETURN_INT32(v.i32);
     case INT8OID:
-      v.i64 = DatumGetInt64(valsContent[0]);
-      for (i = 1; i < valsLength; i++) {
-        if (DatumGetInt64(valsContent[i]) < v.i64) v.i64 = DatumGetInt64(valsContent[i]);
+      for (i = 0; i < valsLength; i++) {
+        if (valsNullFlags[i]) {
+          continue;
+        } else if (resultIsNull) {
+          v.i64 = DatumGetInt64(valsContent[0]);
+          resultIsNull = false;
+        } else if (DatumGetInt64(valsContent[i]) < v.i64) {
+          v.i64 = DatumGetInt64(valsContent[i]);
+        }
       }
-      PG_RETURN_INT64(v.i64);
-      break;
+      if (resultIsNull) PG_RETURN_NULL();
+      else PG_RETURN_INT64(v.i64);
     case FLOAT4OID:
-      v.f4 = DatumGetFloat4(valsContent[0]);
-      for (i = 1; i < valsLength; i++) {
-        if (DatumGetFloat4(valsContent[i]) < v.f4) v.f4 = DatumGetFloat4(valsContent[i]);
+      for (i = 0; i < valsLength; i++) {
+        if (valsNullFlags[i]) {
+          continue;
+        } else if (resultIsNull) {
+          v.f4 = DatumGetFloat4(valsContent[0]);
+          resultIsNull = false;
+        } else if (DatumGetFloat4(valsContent[i]) < v.f4) {
+          v.f4 = DatumGetFloat4(valsContent[i]);
+        }
       }
-      PG_RETURN_FLOAT4(v.f4);
-      break;
+      if (resultIsNull) PG_RETURN_NULL();
+      else PG_RETURN_FLOAT4(v.f4);
     case FLOAT8OID:
-      v.f8 = DatumGetFloat8(valsContent[0]);
-      for (i = 1; i < valsLength; i++) {
-        if (DatumGetFloat8(valsContent[i]) < v.f8) v.f8 = DatumGetFloat8(valsContent[i]);
+      for (i = 0; i < valsLength; i++) {
+        if (valsNullFlags[i]) {
+          continue;
+        } else if (resultIsNull) {
+          v.f8 = DatumGetFloat8(valsContent[0]);
+          resultIsNull = false;
+        } else if (DatumGetFloat8(valsContent[i]) < v.f8) {
+          v.f8 = DatumGetFloat8(valsContent[i]);
+        }
       }
-      PG_RETURN_FLOAT8(v.f8);
-      break;
+      if (resultIsNull) PG_RETURN_NULL();
+      else PG_RETURN_FLOAT8(v.f8);
     default:
       ereport(ERROR, (errmsg("Min subject must be SMALLINT, INTEGER, BIGINT, REAL, or DOUBLE PRECISION values")));
-      break;
   }
 
 }

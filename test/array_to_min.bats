@@ -30,6 +30,16 @@ load test_helper
   [ "$result" = "0" ]
 }
 
+@test "float8 min only one null" {
+  result="$(query "SELECT array_to_min('{NULL}'::double precision[])")";
+  [ "$result" = "NULL" ]
+}
+
+@test "float8 min one null mixed" {
+  result="$(query "SELECT array_to_min('{1,1,NULL,2,0}'::double precision[])")";
+  [ "$result" = "0" ]
+}
+
 @test "string min" {
   run query "SELECT array_to_min('{1,1,5,2,0}'::text[])"
   [ "${lines[0]}" = "ERROR:  Min subject must be SMALLINT, INTEGER, BIGINT, REAL, or DOUBLE PRECISION values" ]

@@ -1,3 +1,7 @@
+## 1.3.0 - 2017-10-10
+
+Added `array_to_count`.
+
 ## 1.2.0 - 2017-10-03
 
 Changed `array_to_min`, `array_to_max`, and `array_to_min_max` to permit

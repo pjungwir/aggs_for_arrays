@@ -1,3 +1,7 @@
+## 1.3.1 - 2017-11-07
+
+Fixed `array_to_hist_2d` x/y dimension confusion.
+
 ## 1.3.0 - 2017-10-10
 
 Added `array_to_count`.

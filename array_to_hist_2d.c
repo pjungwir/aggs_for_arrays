@@ -129,7 +129,7 @@ array_to_hist_2d(PG_FUNCTION_ARGS)
     }
 
     if (xPos >= 0 && xPos < xBucketCount && yPos >= 0 && yPos < yBucketCount) {
-      pos = (int)yPos * xBucketCount + (int)xPos;
+      pos = (int)xPos * yBucketCount + (int)yPos;
       // TODO: Any faster to keep everything as straight int32s until we're done?
       // I think these macros are practically noops for Int32, right?
       histContent[pos] = Int32GetDatum(1 + DatumGetInt32(histContent[pos]));

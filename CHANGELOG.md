@@ -1,3 +1,7 @@
+## 1.3.2 - 2018-03-07
+
+Fixed min/max functions operating on arrays with a leading null.
+
 ## 1.3.1 - 2017-11-07
 
 Fixed `array_to_hist_2d` x/y dimension confusion.

@@ -40,6 +40,16 @@ load test_helper
   [ "$result" = "2" ]
 }
 
+@test "float8 max one leading null" {
+  result="$(query "SELECT array_to_max('{NULL,-1,-1,-2}'::double precision[])")";
+  [ "$result" = "-1" ]
+}
+
+@test "float8 max one trailing null" {
+  result="$(query "SELECT array_to_max('{-1,-1,-2,NULL}'::double precision[])")";
+  [ "$result" = "-1" ]
+}
+
 @test "string max" {
   run query "SELECT array_to_max('{1,1,5,2,0}'::text[])"
   [ "${lines[0]}" = "ERROR:  Max subject must be SMALLINT, INTEGER, BIGINT, REAL, or DOUBLE PRECISION values" ]

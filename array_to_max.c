@@ -79,7 +79,7 @@ array_to_max(PG_FUNCTION_ARGS)
         if (valsNullFlags[i]) {
           continue;
         } else if (resultIsNull) {
-          v.i16 = DatumGetInt16(valsContent[0]);
+          v.i16 = DatumGetInt16(valsContent[i]);
           resultIsNull = false;
         } else if (DatumGetInt16(valsContent[i]) > v.i16) {
           v.i16 = DatumGetInt16(valsContent[i]);
@@ -92,7 +92,7 @@ array_to_max(PG_FUNCTION_ARGS)
         if (valsNullFlags[i]) {
           continue;
         } else if (resultIsNull) {
-          v.i32 = DatumGetInt32(valsContent[0]);
+          v.i32 = DatumGetInt32(valsContent[i]);
           resultIsNull = false;
         } else if (DatumGetInt32(valsContent[i]) > v.i32) {
           v.i32 = DatumGetInt32(valsContent[i]);
@@ -105,7 +105,7 @@ array_to_max(PG_FUNCTION_ARGS)
         if (valsNullFlags[i]) {
           continue;
         } else if (resultIsNull) {
-          v.i64 = DatumGetInt64(valsContent[0]);
+          v.i64 = DatumGetInt64(valsContent[i]);
           resultIsNull = false;
         } else if (DatumGetInt64(valsContent[i]) > v.i64) {
           v.i64 = DatumGetInt64(valsContent[i]);
@@ -118,7 +118,7 @@ array_to_max(PG_FUNCTION_ARGS)
         if (valsNullFlags[i]) {
           continue;
         } else if (resultIsNull) {
-          v.f4 = DatumGetFloat4(valsContent[0]);
+          v.f4 = DatumGetFloat4(valsContent[i]);
           resultIsNull = false;
         } else if (DatumGetFloat4(valsContent[i]) > v.f4) {
           v.f4 = DatumGetFloat4(valsContent[i]);
@@ -131,7 +131,7 @@ array_to_max(PG_FUNCTION_ARGS)
         if (valsNullFlags[i]) {
           continue;
         } else if (resultIsNull) {
-          v.f8 = DatumGetFloat8(valsContent[0]);
+          v.f8 = DatumGetFloat8(valsContent[i]);
           resultIsNull = false;
         } else if (DatumGetFloat8(valsContent[i]) > v.f8) {
           v.f8 = DatumGetFloat8(valsContent[i]);

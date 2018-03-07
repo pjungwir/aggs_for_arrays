@@ -89,8 +89,8 @@ array_to_min_max(PG_FUNCTION_ARGS)
         if (valsNullFlags[i]) {
           continue;
         } else if (resultIsNull) {
-          minV.i16 = DatumGetInt16(valsContent[0]);
-          maxV.i16 = DatumGetInt16(valsContent[0]);
+          minV.i16 = DatumGetInt16(valsContent[i]);
+          maxV.i16 = DatumGetInt16(valsContent[i]);
           resultIsNull = false;
         } else {
           if (DatumGetInt16(valsContent[i]) < minV.i16) minV.i16 = DatumGetInt16(valsContent[i]);
@@ -106,8 +106,8 @@ array_to_min_max(PG_FUNCTION_ARGS)
         if (valsNullFlags[i]) {
           continue;
         } else if (resultIsNull) {
-          minV.i32 = DatumGetInt32(valsContent[0]);
-          maxV.i32 = DatumGetInt32(valsContent[0]);
+          minV.i32 = DatumGetInt32(valsContent[i]);
+          maxV.i32 = DatumGetInt32(valsContent[i]);
           resultIsNull = false;
         } else {
           if (DatumGetInt32(valsContent[i]) < minV.i32) minV.i32 = DatumGetInt32(valsContent[i]);
@@ -123,8 +123,8 @@ array_to_min_max(PG_FUNCTION_ARGS)
         if (valsNullFlags[i]) {
           continue;
         } else if (resultIsNull) {
-          minV.i64 = DatumGetInt64(valsContent[0]);
-          maxV.i64 = DatumGetInt64(valsContent[0]);
+          minV.i64 = DatumGetInt64(valsContent[i]);
+          maxV.i64 = DatumGetInt64(valsContent[i]);
           resultIsNull = false;
         } else {
           if (DatumGetInt64(valsContent[i]) < minV.i64) minV.i64 = DatumGetInt64(valsContent[i]);
@@ -140,8 +140,8 @@ array_to_min_max(PG_FUNCTION_ARGS)
         if (valsNullFlags[i]) {
           continue;
         } else if (resultIsNull) {
-          minV.f4 = DatumGetFloat4(valsContent[0]);
-          maxV.f4 = DatumGetFloat4(valsContent[0]);
+          minV.f4 = DatumGetFloat4(valsContent[i]);
+          maxV.f4 = DatumGetFloat4(valsContent[i]);
           resultIsNull = false;
         } else {
           if (DatumGetFloat4(valsContent[i]) < minV.f4) minV.f4 = DatumGetFloat4(valsContent[i]);
@@ -157,8 +157,8 @@ array_to_min_max(PG_FUNCTION_ARGS)
         if (valsNullFlags[i]) {
           continue;
         } else if (resultIsNull) {
-          minV.f8 = DatumGetFloat8(valsContent[0]);
-          maxV.f8 = DatumGetFloat8(valsContent[0]);
+          minV.f8 = DatumGetFloat8(valsContent[i]);
+          maxV.f8 = DatumGetFloat8(valsContent[i]);
           resultIsNull = false;
         } else {
           if (DatumGetFloat8(valsContent[i]) < minV.f8) minV.f8 = DatumGetFloat8(valsContent[i]);

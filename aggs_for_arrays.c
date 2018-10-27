@@ -7,6 +7,10 @@
 
 PG_MODULE_MAGIC;
 
+#ifdef __SSE2__
+typedef double v2df __attribute__ ((vector_size(16)));
+#endif
+
 #include "util.c"
 #include "array_to_hist.c"
 #include "array_to_hist_2d.c"

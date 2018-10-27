@@ -20,7 +20,7 @@ function query_with_timing() {
 }
 
 function bench() {
-  for i in {1..$REPEATS}; do
+  for i in `seq $REPEATS`; do
     query_with_timing "$1" | tail -1
   done | awk '{ print $2 }' | average;
 }

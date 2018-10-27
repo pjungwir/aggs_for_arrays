@@ -1,5 +1,6 @@
 *.o
 *.so
+*.s
 .*.swp
 .*.swo
 bench-results.txt

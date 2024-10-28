@@ -96,7 +96,7 @@ array_to_hist(PG_FUNCTION_ARGS)
       bucketsSize.f8 = PG_GETARG_FLOAT8(2);
       break;
     default:
-      break;
+      ereport(ERROR, (errmsg("Unexpected array type: %u", valsType)));
   }
   bucketsCount = PG_GETARG_INT32(3);
 
@@ -173,7 +173,7 @@ array_to_hist(PG_FUNCTION_ARGS)
       }
       break;
     default:
-      break;
+      ereport(ERROR, (errmsg("Unexpected array type: %u", valsType)));
   }
 
   // Wrap the buckets in a new PostgreSQL array object.

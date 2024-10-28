@@ -1,0 +1,72 @@
+SELECT sorted_array_to_percentiles('{}'::float[], '{0.2, 0.4}'::float[]);
+ sorted_array_to_percentiles 
+-----------------------------
+ 
+(1 row)
+
+SELECT sorted_array_to_percentiles('{0,1,1,2,5,7}'::float[], '{}'::float[]);
+ sorted_array_to_percentiles 
+-----------------------------
+ 
+(1 row)
+
+SELECT sorted_array_to_percentiles('{0,1,1,2,5,7}'::smallint[], '{0.2, 0.4}'::float[]);
+ sorted_array_to_percentiles 
+-----------------------------
+ {1,1}
+(1 row)
+
+SELECT sorted_array_to_percentiles('{0,1,1,2,5,7}'::integer[], '{0.2, 0.4}'::float[]);
+ sorted_array_to_percentiles 
+-----------------------------
+ {1,1}
+(1 row)
+
+SELECT sorted_array_to_percentiles('{0,1,1,2,5,7}'::bigint[], '{0.2, 0.4}'::float[]);
+ sorted_array_to_percentiles 
+-----------------------------
+ {1,1}
+(1 row)
+
+SELECT sorted_array_to_percentiles('{0,1,1,2,5,7}'::real[], '{0.2, 0.4}'::float[]);
+ sorted_array_to_percentiles 
+-----------------------------
+ {1,1}
+(1 row)
+
+SELECT sorted_array_to_percentiles('{0,1,1,2,5,7}'::float[], '{0.2, 0.4}'::float[]);
+ sorted_array_to_percentiles 
+-----------------------------
+ {1,1}
+(1 row)
+
+SELECT sorted_array_to_percentiles('{0,1,1,2,5,7}'::text[], '{0.2, 0.4}'::float[]);
+ERROR:  Percentiles subject must be SMALLINT, INTEGER, BIGINT, REAL, or DOUBLE PRECISION values
+SELECT sorted_array_to_percentiles('{0,1,1,2,5,7}'::float[], '{0,0.2}'::float[]);
+ sorted_array_to_percentiles 
+-----------------------------
+ {0,1}
+(1 row)
+
+SELECT sorted_array_to_percentiles('{0,1,1,2,5,7}'::float[], '{0.2,1}'::float[]);
+ sorted_array_to_percentiles 
+-----------------------------
+ {1,7}
+(1 row)
+
+SELECT sorted_array_to_percentiles('{0,1,1,2,5,7}'::float[], '{0.5}'::float[]);
+ sorted_array_to_percentiles 
+-----------------------------
+ {1.5}
+(1 row)
+
+SELECT sorted_array_to_percentiles('{0,1,2,3,5}'::float[], '{0.5}'::float[]);
+ sorted_array_to_percentiles 
+-----------------------------
+ {2}
+(1 row)
+
+SELECT sorted_array_to_percentiles('{0,1,1,2,5,7}'::float[], '{-0.2, 0.4}'::float[]);
+ERROR:  Percent must be between 0 and 1
+SELECT sorted_array_to_percentiles('{0,1,1,2,5,7}'::float[], '{1.2}'::float[]);
+ERROR:  Percent must be between 0 and 1

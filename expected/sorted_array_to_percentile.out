@@ -1,0 +1,66 @@
+SELECT sorted_array_to_percentile('{}'::float[], 0.2);
+ sorted_array_to_percentile 
+----------------------------
+                           
+(1 row)
+
+SELECT sorted_array_to_percentile('{0,1,1,2,5,7}'::smallint[], 0.2);
+ sorted_array_to_percentile 
+----------------------------
+                          1
+(1 row)
+
+SELECT sorted_array_to_percentile('{0,1,1,2,5,7}'::integer[], 0.2);
+ sorted_array_to_percentile 
+----------------------------
+                          1
+(1 row)
+
+SELECT sorted_array_to_percentile('{0,1,1,2,5,7}'::bigint[], 0.2);
+ sorted_array_to_percentile 
+----------------------------
+                          1
+(1 row)
+
+SELECT sorted_array_to_percentile('{0,1,1,2,5,7}'::real[], 0.2);
+ sorted_array_to_percentile 
+----------------------------
+                          1
+(1 row)
+
+SELECT sorted_array_to_percentile('{0,1,1,2,5,7}'::float[], 0.2);
+ sorted_array_to_percentile 
+----------------------------
+                          1
+(1 row)
+
+SELECT sorted_array_to_percentile('{0,1,1,2,5,7}'::text[], 0.2);
+ERROR:  Percentile subject must be SMALLINT, INTEGER, BIGINT, REAL, or DOUBLE PRECISION values
+SELECT sorted_array_to_percentile('{0,1,1,2,5,7}'::float[], 0);
+ sorted_array_to_percentile 
+----------------------------
+                          0
+(1 row)
+
+SELECT sorted_array_to_percentile('{0,1,1,2,5,7}'::float[], 1);
+ sorted_array_to_percentile 
+----------------------------
+                          7
+(1 row)
+
+SELECT sorted_array_to_percentile('{0,1,1,2,5,7}'::float[], 0.5);
+ sorted_array_to_percentile 
+----------------------------
+                        1.5
+(1 row)
+
+SELECT sorted_array_to_percentile('{0,1,2,3,5}'::float[], 0.5);
+ sorted_array_to_percentile 
+----------------------------
+                          2
+(1 row)
+
+SELECT sorted_array_to_percentile('{0,1,1,2,5,7}'::float[], -0.2);
+ERROR:  Percent must be between 0 and 1
+SELECT sorted_array_to_percentile('{0,1,1,2,5,7}'::float[], 1.2);
+ERROR:  Percent must be between 0 and 1

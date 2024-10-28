@@ -1,0 +1,68 @@
+SELECT array_to_mode('{}'::float[]);
+ array_to_mode 
+---------------
+              
+(1 row)
+
+SELECT array_to_mode('{1,1,5,2,0}'::smallint[]);
+ array_to_mode 
+---------------
+             1
+(1 row)
+
+SELECT array_to_mode('{1,1,5,2,0}'::integer[]);
+ array_to_mode 
+---------------
+             1
+(1 row)
+
+SELECT array_to_mode('{1,1,5,2,0}'::bigint[]);
+ array_to_mode 
+---------------
+             1
+(1 row)
+
+SELECT array_to_mode('{1,1,5,2,0}'::real[]);
+ array_to_mode 
+---------------
+             1
+(1 row)
+
+SELECT array_to_mode('{1,1,5,2,0}'::float[]);
+ array_to_mode 
+---------------
+             1
+(1 row)
+
+SELECT array_to_mode('{1,1,5,2,0}'::text[]);
+ERROR:  Mode subject must be SMALLINT, INTEGER, BIGINT, REAL, or DOUBLE PRECISION values
+SELECT array_to_mode('{1,1,5,2,2,0}'::smallint[]);
+ array_to_mode 
+---------------
+           1.5
+(1 row)
+
+SELECT array_to_mode('{1,1,5,2,2,0}'::integer[]);
+ array_to_mode 
+---------------
+           1.5
+(1 row)
+
+SELECT array_to_mode('{1,1,5,2,2,0}'::bigint[]);
+ array_to_mode 
+---------------
+           1.5
+(1 row)
+
+SELECT array_to_mode('{1,1,5,2,2,0}'::real[]);
+ array_to_mode 
+---------------
+           1.5
+(1 row)
+
+SELECT array_to_mode('{1,1,5,2,2,0}'::float[]);
+ array_to_mode 
+---------------
+           1.5
+(1 row)
+

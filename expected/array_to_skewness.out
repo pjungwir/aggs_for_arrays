@@ -1,0 +1,38 @@
+SELECT array_to_skewness('{}'::float[]);
+ array_to_skewness 
+-------------------
+                  
+(1 row)
+
+SELECT array_to_skewness('{1,1,5,2,0}'::smallint[]);
+ array_to_skewness 
+-------------------
+ 1.017952296026958
+(1 row)
+
+SELECT array_to_skewness('{1,1,5,2,0}'::integer[]);
+ array_to_skewness 
+-------------------
+ 1.017952296026958
+(1 row)
+
+SELECT array_to_skewness('{1,1,5,2,0}'::bigint[]);
+ array_to_skewness 
+-------------------
+ 1.017952296026958
+(1 row)
+
+SELECT array_to_skewness('{1,1,5,2,0}'::real[]);
+ array_to_skewness 
+-------------------
+ 1.017952296026958
+(1 row)
+
+SELECT array_to_skewness('{1,1,5,2,0}'::float[]);
+ array_to_skewness 
+-------------------
+ 1.017952296026958
+(1 row)
+
+SELECT array_to_skewness('{1,1,5,2,0}'::text[]);
+ERROR:  Skewness subject must be SMALLINT, INTEGER, BIGINT, REAL, or DOUBLE PRECISION values

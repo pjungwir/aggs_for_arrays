@@ -1,0 +1,13 @@
+SELECT array_to_percentile('{}'::float[], 0.2);
+SELECT array_to_percentile('{1,1,5,2,0,7}'::smallint[], 0.2);
+SELECT array_to_percentile('{1,1,5,2,0,7}'::integer[], 0.2);
+SELECT array_to_percentile('{1,1,5,2,0,7}'::bigint[], 0.2);
+SELECT array_to_percentile('{1,1,5,2,0,7}'::real[], 0.2);
+SELECT array_to_percentile('{1,1,5,2,0,7}'::float[], 0.2);
+SELECT array_to_percentile('{1,1,5,2,0,7}'::text[], 0.2);
+SELECT array_to_percentile('{1,1,5,2,0,7}'::float[], 0);
+SELECT array_to_percentile('{1,1,5,2,0,7}'::float[], 1);
+SELECT array_to_percentile('{1,1,5,2,0,7}'::float[], 0.5);
+SELECT array_to_percentile('{1,2,5,3,0}'::float[], 0.5);
+SELECT array_to_percentile('{1,1,5,2,0,7}'::float[], -0.2);
+SELECT array_to_percentile('{1,1,5,2,0,7}'::float[], 1.2);

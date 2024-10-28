@@ -4,4 +4,5 @@
 .*.swo
 bench-results.txt
 /aggs_for_arrays*.zip
+/results
 

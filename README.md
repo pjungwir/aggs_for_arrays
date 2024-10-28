@@ -195,3 +195,9 @@ The `sorted_array_to_*` methods use `sorted_samples` and `sorted_sample_groups` 
 | `array_to_skewness`           |    22267.2 ms |      802.463 ms |         1077.630 ms |        120.925 ms |
 | `array_to_kurtosis`           |    22253.1 ms |      806.296 ms |         1075.960 ms |        112.210 ms |
 
+
+
+Development
+-----------
+
+These tests follow the [PGXS and `pg_regress` framework](https://www.postgresql.org/docs/current/extend-pgxs.html) used for Postgres extensions, including Postgres's own contrib package. To run the tests, first install the extension somewhere then say `make installcheck`. You can use standard libpq envvars to control the database connection, e.g. `PGPORT=5436 make installcheck`.

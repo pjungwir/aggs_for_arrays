@@ -1,0 +1,14 @@
+SELECT sorted_array_to_percentiles('{}'::float[], '{0.2, 0.4}'::float[]);
+SELECT sorted_array_to_percentiles('{0,1,1,2,5,7}'::float[], '{}'::float[]);
+SELECT sorted_array_to_percentiles('{0,1,1,2,5,7}'::smallint[], '{0.2, 0.4}'::float[]);
+SELECT sorted_array_to_percentiles('{0,1,1,2,5,7}'::integer[], '{0.2, 0.4}'::float[]);
+SELECT sorted_array_to_percentiles('{0,1,1,2,5,7}'::bigint[], '{0.2, 0.4}'::float[]);
+SELECT sorted_array_to_percentiles('{0,1,1,2,5,7}'::real[], '{0.2, 0.4}'::float[]);
+SELECT sorted_array_to_percentiles('{0,1,1,2,5,7}'::float[], '{0.2, 0.4}'::float[]);
+SELECT sorted_array_to_percentiles('{0,1,1,2,5,7}'::text[], '{0.2, 0.4}'::float[]);
+SELECT sorted_array_to_percentiles('{0,1,1,2,5,7}'::float[], '{0,0.2}'::float[]);
+SELECT sorted_array_to_percentiles('{0,1,1,2,5,7}'::float[], '{0.2,1}'::float[]);
+SELECT sorted_array_to_percentiles('{0,1,1,2,5,7}'::float[], '{0.5}'::float[]);
+SELECT sorted_array_to_percentiles('{0,1,2,3,5}'::float[], '{0.5}'::float[]);
+SELECT sorted_array_to_percentiles('{0,1,1,2,5,7}'::float[], '{-0.2, 0.4}'::float[]);
+SELECT sorted_array_to_percentiles('{0,1,1,2,5,7}'::float[], '{1.2}'::float[]);

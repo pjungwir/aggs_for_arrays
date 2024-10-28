@@ -1,15 +1,15 @@
 {
   "name": "aggs_for_arrays",
   "abstract": "Functions to compute statistics on arrays of numbers",
-  "version": "1.3.2",
+  "version": "1.3.3",
   "maintainer": "Paul A. Jungwirth <pj@illuminatedcomputing.com>",
   "license": "mit",
   "provides": {
     "aggs_for_arrays": {
       "abstract": "Functions to compute statistics on arrays of numbers",
-      "file": "aggs_for_arrays--1.3.2.sql",
+      "file": "aggs_for_arrays--1.3.3.sql",
       "docfile": "README.md",
-      "version": "1.3.2"
+      "version": "1.3.3"
     }
   },
   "resources": {

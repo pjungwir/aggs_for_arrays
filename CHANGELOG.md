@@ -1,3 +1,7 @@
+## 1.3.3 - 2024-10-28
+
+Convert tests to `pg_regress`.
+
 ## 1.3.2 - 2018-03-07
 
 Fixed min/max functions operating on arrays with a leading null.

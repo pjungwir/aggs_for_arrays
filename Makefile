@@ -41,6 +41,7 @@ bench-report.txt: bench_results.txt
 	./bench/format-table.rb < bench-results.txt | tee bench-report.txt
 
 release:
+	git tag v$(EXTENSION_VERSION)
 	git archive --format zip --prefix=$(EXTENSION)-$(EXTENSION_VERSION)/ --output $(EXTENSION)-$(EXTENSION_VERSION).zip master
 
 .PHONY: test bench release

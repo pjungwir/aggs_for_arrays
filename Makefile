@@ -1,7 +1,9 @@
 MODULES = aggs_for_arrays
 EXTENSION = aggs_for_arrays
 EXTENSION_VERSION = 1.3.3
-DATA = $(EXTENSION)--$(EXTENSION_VERSION).sql
+DATA = $(EXTENSION)--$(EXTENSION_VERSION).sql \
+			 $(EXTENSION)--1.3.1--1.3.2.sql \
+			 $(EXTENSION)--1.3.2--1.3.3.sql
 
 REGRESS = setup \
 					array_to_count \
